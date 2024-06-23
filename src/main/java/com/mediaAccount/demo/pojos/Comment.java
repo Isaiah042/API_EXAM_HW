@@ -11,11 +11,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
+    private String commentWords;
 
-    private User user;
+    private Long postId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Post post;
+    private Long userId;
 
     public Long getCommentId() {
         return commentId;
@@ -25,19 +25,27 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public User getUser() {
-        return user;
+    public String getCommentWords() {
+        return commentWords;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCommentWords(String commentWords) {
+        this.commentWords = commentWords;
     }
 
-    public Post getPost() {
-        return post;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

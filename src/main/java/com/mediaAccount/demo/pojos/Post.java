@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "Posts")
 public class Post {
 
     @Id
@@ -17,12 +16,8 @@ public class Post {
 
     private String contentOfPost;
 
-    @JoinColumn(name = "userId")
-    private User userId;
+    private Long userId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "POST_ID")
-    private Comment comments;
 
     public Long getPostId() {
         return postId;
@@ -40,13 +35,6 @@ public class Post {
         this.titleOfPost = titleOfPost;
     }
 
-    public Comment getComments() {
-        return comments;
-    }
-
-    public void setComments(Comment comments) {
-        this.comments = comments;
-    }
 
     public String getContentOfPost() {
         return contentOfPost;
@@ -56,11 +44,11 @@ public class Post {
         this.contentOfPost = contentOfPost;
     }
 
-    public User getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

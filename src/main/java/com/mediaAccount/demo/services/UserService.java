@@ -18,27 +18,42 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    @Autowired
-    private PostRepo postRepo;
 
-    public ResponseEntity<?> createAnAccount(User user){
-        return null;
+    public User createAnAccount(User user){
+        return userRepo.save(user);
     }
 
-//    public User getUserById(Long userId){
-//        return userRepo.findBy();
-//    }
+    public User getUserById(Long userId){
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null){
+            throw new RuntimeException("User not found");
+        }
+        return user;
+    }
 
     public List<User> getAllUsers(){
         return userRepo.findAll();
     }
 
     public void deleteUser(Long userId){
-
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null){
+            throw new RuntimeException("User not found");
+        }
+        userRepo.deleteById(userId);
     }
 
     public User updateUser(Long userId, User updatedUser){
-        return null;
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null){
+            throw new RuntimeException("User not found");
+        }
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setGender(updatedUser.getGender());
+        user.setUserName(updatedUser.getUserName());
+
+        return userRepo.save(updatedUser);
     }
 
 

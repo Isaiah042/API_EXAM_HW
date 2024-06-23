@@ -6,7 +6,5 @@ import com.mediaAccount.demo.pojos.Comment;
 import java.util.List;
 
 public interface CommentRepo extends JpaRepository<Comment,Long> {
-
-    //Have to write query if you dont want to use optional
-
+    List<Comment> findCommentByPostId(Long postId);
 }

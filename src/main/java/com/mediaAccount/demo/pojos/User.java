@@ -1,5 +1,6 @@
 package com.mediaAccount.demo.pojos;
 
+import com.mediaAccount.demo.pojos.enums.Gender;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,9 @@ public class User {
     private String lastName;
 
     private String userName;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     public Long getUserId() {
         return userId;
@@ -46,5 +50,13 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

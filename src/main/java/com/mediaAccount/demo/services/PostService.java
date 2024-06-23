@@ -15,28 +15,45 @@ public class PostService {
     @Autowired
     private PostRepo postRepo;
 
-    public ResponseEntity<?> createPost(Post post){
-        return null;
+    public Post createPost(Post post){
+        return postRepo.save(post);
     }
 
-//    public User getPostById(Long postId){
-//        return userRepo.findBy();
-//    }
+    public Post getPostById(Long postId){
+        Post post =postRepo.findById(postId).orElse(null);
+        if(post == null){
+            throw new RuntimeException("Post not found");
+        }
+        return post;
+    }
 
     public List<Post> getAllPost(){
         return postRepo.findAll();
     }
 
     public void deletePost(Long postId){
+        Post post = postRepo.findById(postId).orElse(null);
+        if(post == null){
+            throw new RuntimeException("Post not found");
+        }
+        postRepo.deleteById(postId);
+    }
+
+    public Post updatePost(Long postId, Post updatedPost){
+        Post post = postRepo.findById(postId).orElse(null);
+        if(post == null){
+            throw new RuntimeException("Post not found");
+        }
+        post.setUserId(updatedPost.getUserId());
+        post.setPostId(updatedPost.getPostId());
+        post.setTitleOfPost(updatedPost.getTitleOfPost());
+        post.setContentOfPost(updatedPost.getContentOfPost());
+        return postRepo.save(post);
 
     }
 
-    public Post updatePost(Long postId, User updatedPost){
-        return null;
-    }
-
-    public User getPostByUserId(){
-        return null;
+    public List<Post> getPostByUserId(Long userId){
+        return postRepo.findByUserId(userId);
     }
 
 }
