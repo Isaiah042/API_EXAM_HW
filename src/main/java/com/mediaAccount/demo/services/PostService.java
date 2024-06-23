@@ -1,5 +1,6 @@
 package com.mediaAccount.demo.services;
 
+import com.mediaAccount.demo.exceptions.ResourceNotFound;
 import com.mediaAccount.demo.pojos.Post;
 import com.mediaAccount.demo.pojos.User;
 import com.mediaAccount.demo.repos.PostRepo;
@@ -20,9 +21,9 @@ public class PostService {
     }
 
     public Post getPostById(Long postId){
-        Post post =postRepo.findById(postId).orElse(null);
+        Post post = postRepo.findById(postId).orElse(null);
         if(post == null){
-            throw new RuntimeException("Post not found");
+            throw new ResourceNotFound("Post not found");
         }
         return post;
     }
@@ -34,7 +35,7 @@ public class PostService {
     public void deletePost(Long postId){
         Post post = postRepo.findById(postId).orElse(null);
         if(post == null){
-            throw new RuntimeException("Post not found");
+            throw new ResourceNotFound("Cannot delete post by Id given: " + postId);
         }
         postRepo.deleteById(postId);
     }
@@ -42,7 +43,7 @@ public class PostService {
     public Post updatePost(Long postId, Post updatedPost){
         Post post = postRepo.findById(postId).orElse(null);
         if(post == null){
-            throw new RuntimeException("Post not found");
+            throw new ResourceNotFound("Cannot update post by Id given: " + postId);
         }
         post.setUserId(updatedPost.getUserId());
         post.setPostId(updatedPost.getPostId());

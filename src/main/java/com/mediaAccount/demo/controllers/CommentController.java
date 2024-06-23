@@ -25,15 +25,15 @@ public class CommentController {
 //        return new ResponseEntity<>(commentCreated, HttpStatus.OK);
 //    }
 
-    @PostMapping("/user/post/{id}/comment")
+    @PostMapping("/user/post/{postId}/comment")
     public ResponseEntity<?> createComment(@RequestBody Comment comment,@PathVariable Long postId) {
        Comment commentCreated = commentService.createComment(comment,postId);
         logger.info("Comment created successfully");
         return new ResponseEntity<>(commentCreated, HttpStatus.OK);
     }
 
-    @PostMapping("/user/post/comment/{id}")
-    public ResponseEntity<?> getCommentById(@PathVariable Long commentId) {
+    @GetMapping("/user/post/comment/{commentId}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable Long commentId) {
         Comment comment = commentService.getCommentById(commentId);
         logger.info("Comment with id {} retrieved successfully", commentId);
         return new ResponseEntity<>(comment, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class CommentController {
     }
 
 
-    @DeleteMapping("/user/post/comment/{id}")
+    @DeleteMapping("/user/post/comment/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
         logger.info("Comment deleted successfully");
@@ -55,7 +55,7 @@ public class CommentController {
     }
 
 
-    @PutMapping("/user/post/comment/{id}")
+    @PutMapping("/user/post/comment/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long commentId,@RequestBody Comment updatedComment) {
         commentService.updateComment(commentId, updatedComment);
         logger.info("Comment updated successfully");

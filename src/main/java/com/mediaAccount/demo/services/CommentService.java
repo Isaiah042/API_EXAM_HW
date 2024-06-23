@@ -1,5 +1,6 @@
 package com.mediaAccount.demo.services;
 
+import com.mediaAccount.demo.exceptions.ResourceNotFound;
 import com.mediaAccount.demo.pojos.Comment;
 import com.mediaAccount.demo.pojos.User;
 import com.mediaAccount.demo.repos.CommentRepo;
@@ -28,7 +29,7 @@ public class CommentService {
     public Comment getCommentById(Long commentId){
         Comment comment = commentRepo.findById(commentId).orElse(null);
         if (comment == null){
-            throw new RuntimeException("Comment not found");
+            throw new ResourceNotFound("Comment not found");
         }
         return comment;
     }
@@ -40,7 +41,7 @@ public class CommentService {
     public void deleteComment(Long commentId){
         Comment comment = commentRepo.findById(commentId).orElse(null);
         if (comment == null){
-            throw new RuntimeException("Comment not found");
+            throw new ResourceNotFound("Cannot delete comment, comment not found");
         }
         commentRepo.deleteById(commentId);
     }
@@ -48,7 +49,7 @@ public class CommentService {
     public Comment updateComment(Long commentId, Comment updatedComment){
         Comment comment = commentRepo.findById(commentId).orElse(null);
         if (comment == null){
-            throw new RuntimeException("Comment not found");
+            throw new ResourceNotFound("Comment cannot be updated, comment not found");
         }
         comment.setUserId(updatedComment.getUserId());
         comment.setPostId(updatedComment.getPostId());

@@ -24,8 +24,8 @@ public class UserController {
         return new ResponseEntity<>(userCreated, HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@RequestBody Long userId) {
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         logger.info("User with id {}", user + " retrieved successfully");
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -38,14 +38,14 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@RequestBody Long userId) {
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         logger.info("User deleted successfully");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/users/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId,@RequestBody User updatedUser) {
         userService.updateUser(userId, updatedUser);
         logger.info("User updated successfully");

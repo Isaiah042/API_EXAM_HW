@@ -1,5 +1,6 @@
 package com.mediaAccount.demo.services;
 
+import com.mediaAccount.demo.exceptions.ResourceNotFound;
 import com.mediaAccount.demo.pojos.Post;
 import com.mediaAccount.demo.pojos.User;
 import com.mediaAccount.demo.repos.PostRepo;
@@ -26,7 +27,7 @@ public class UserService {
     public User getUserById(Long userId){
         User user = userRepo.findById(userId).orElse(null);
         if (user == null){
-            throw new RuntimeException("User not found");
+            throw new ResourceNotFound("User not found");
         }
         return user;
     }
@@ -38,7 +39,7 @@ public class UserService {
     public void deleteUser(Long userId){
         User user = userRepo.findById(userId).orElse(null);
         if (user == null){
-            throw new RuntimeException("User not found");
+            throw new ResourceNotFound("Cannot delete user with id " + userId);
         }
         userRepo.deleteById(userId);
     }
@@ -46,7 +47,7 @@ public class UserService {
     public User updateUser(Long userId, User updatedUser){
         User user = userRepo.findById(userId).orElse(null);
         if (user == null){
-            throw new RuntimeException("User not found");
+            throw new ResourceNotFound("Incorrect user id to update an existing one");
         }
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());

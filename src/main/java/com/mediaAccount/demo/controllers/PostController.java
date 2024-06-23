@@ -18,15 +18,15 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/user/post")
+    @PostMapping("/user/{userId}/post")
     public ResponseEntity<?> createPost(@RequestBody Post post) {
         Post postCreated = postService.createPost(post);
         logger.info("Post created successfully");
         return new ResponseEntity<>(postCreated, HttpStatus.OK);
     }
 
-    @GetMapping("/user/post/{id}")
-    public ResponseEntity<Post> getPostById(@RequestBody Long postId) {
+    @GetMapping("/user/post/{postId}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
         logger.info("Post with id {}", post + " retrieved successfully");
         return new ResponseEntity<>(post, HttpStatus.OK);
@@ -39,21 +39,21 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{id}/posts")
-    public ResponseEntity<?> getPostByUserId(@RequestBody Long userId) {
+    @GetMapping("/user/{userId}/posts")
+    public ResponseEntity<?> getPostByUserId(@PathVariable Long userId) {
         Iterable<Post> post = postService.getPostByUserId(userId);
         logger.info("Post retrieved successfully");
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    @DeleteMapping("/post/{id}")
-    public ResponseEntity<?> deletePost(@RequestBody Long postId) {
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         logger.info("Post deleted successfully");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/users/post/{id}")
+    @PutMapping("/users/post/{postId}")
     public ResponseEntity<Post> updatePost(@PathVariable Long postId,@RequestBody Post updatedPost) {
         postService.updatePost(postId, updatedPost);
         logger.info("Post updated successfully");
